@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cmd=$(digdag start "$@" | tee >(cat 1>&2) | grep ^hint | sed 's/.*`\(.*\)`.*/\1/')
+if [[ $cmd == "digdag retry"* ]]; then
+    echo "どうも、digdag_super_startです。そのsessionはすでに存在していますので、digdag様の言うhintコマンド(${cmd})を実行します"
+    eval $cmd
+fi
